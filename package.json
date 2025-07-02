@@ -1,0 +1,23 @@
+{
+  "name": "threejs_prac",
+  "version": "1.0.0",
+  "description": "practicing three js",
+  "keywords": [
+    "threejs"
+  ],
+  "homepage": "https://github.com/AriesJ12/threejs_prac#readme",
+  "bugs": {
+    "url": "https://github.com/AriesJ12/threejs_prac/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AriesJ12/threejs_prac.git"
+  },
+  "license": "ISC",
+  "author": "aries",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

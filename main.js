@@ -23,3 +23,16 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 // will render it at full size but at a lower resolution(like upscaling)
 
 document.body.appendChild( renderer.domElement );
+
+const geometry = new THREE.BoxGeometry( 1, 1, 1 ); // defines the shape
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // material, allows to color it too
+const cube = new THREE.Mesh( geometry, material ); // adds a mesh (combines the shape, and material)
+scene.add( cube ); // add the cube to the scene
+
+camera.position.z = 5; // position the camera - we move the camera because all "added" mesh in the line above are position at (0x,0y,0z)
+
+function animate() { // function to render
+  renderer.render( scene, camera );
+}
+// render the scene
+renderer.setAnimationLoop( animate );

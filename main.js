@@ -15,4 +15,11 @@ const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.inner
 //renders(more like play) the scene
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
+// renders the scene
+// parameters:
+// width
+// height
+// optional updateStyle(default true) - the first 2 parameters are responsible at rendering it at a desired size but making this into "false"
+// will render it at full size but at a lower resolution(like upscaling)
+
 document.body.appendChild( renderer.domElement );

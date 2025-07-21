@@ -26,17 +26,17 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
 
 // Mercury Texture
 const textureLoader = new THREE.TextureLoader();
-const mercuryTexture = textureLoader.load('./planets/2k_mercury.jpg');
+const mercuryTexture = textureLoader.load('./planets/2k_mercury.jpg'); // added texture, this is basically "color" of the mesh material
 
 // Sphere
 const geometry = new THREE.SphereGeometry(1, 64, 64);
-const material = new THREE.MeshStandardMaterial({ map: mercuryTexture });
+const material = new THREE.MeshStandardMaterial({ map: mercuryTexture }); // texture here -- see it replaces the color
 const mercury = new THREE.Mesh(geometry, material);
 scene.add(mercury);
 

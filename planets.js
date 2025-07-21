@@ -23,12 +23,17 @@ document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // lights everywhere
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // light on a certain direction
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
+
+const lightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.5); // light helper(point where light is coming from the directional light)
+scene.add(lightHelper);
+
+// note: based on this, orbit controls seems to move the CAMERA not the object itself -- check the params
 
 // Mercury Texture
 const textureLoader = new THREE.TextureLoader();

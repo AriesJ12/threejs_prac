@@ -29,3 +29,14 @@ scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
+
+// Mercury Texture
+const textureLoader = new THREE.TextureLoader();
+TODO: missing texture
+const mercuryTexture = textureLoader.load('');
+
+// Sphere
+const geometry = new THREE.SphereGeometry(1, 64, 64);
+const material = new THREE.MeshStandardMaterial({ map: mercuryTexture });
+const mercury = new THREE.Mesh(geometry, material);
+scene.add(mercury);

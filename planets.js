@@ -32,8 +32,7 @@ scene.add(directionalLight);
 
 // Mercury Texture
 const textureLoader = new THREE.TextureLoader();
-TODO: missing texture
-const mercuryTexture = textureLoader.load('');
+const mercuryTexture = textureLoader.load('planets/mercury.jpg');
 
 // Sphere
 const geometry = new THREE.SphereGeometry(1, 64, 64);

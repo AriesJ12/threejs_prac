@@ -1,5 +1,5 @@
-import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { OrbitControls } from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 // Scene
 const scene = new THREE.Scene();
@@ -32,7 +32,7 @@ scene.add(directionalLight);
 
 // Mercury Texture
 const textureLoader = new THREE.TextureLoader();
-const mercuryTexture = textureLoader.load('planets/mercury.jpg');
+const mercuryTexture = textureLoader.load('./planets/2k_mercury.jpg');
 
 // Sphere
 const geometry = new THREE.SphereGeometry(1, 64, 64);

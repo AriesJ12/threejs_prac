@@ -40,3 +40,13 @@ const geometry = new THREE.SphereGeometry(1, 64, 64);
 const material = new THREE.MeshStandardMaterial({ map: mercuryTexture });
 const mercury = new THREE.Mesh(geometry, material);
 scene.add(mercury);
+
+// Animation
+function animate() {
+    requestAnimationFrame(animate);
+    mercury.rotation.y += 0.003;
+    controls.update();
+    renderer.render(scene, camera);
+}
+
+animate();

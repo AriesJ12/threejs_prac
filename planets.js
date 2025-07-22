@@ -45,10 +45,20 @@ const material = new THREE.MeshStandardMaterial({ map: mercuryTexture }); // tex
 const mercury = new THREE.Mesh(geometry, material);
 scene.add(mercury);
 
+// venus
+const venusTexture = textureLoader.load("./planets/2k_venus_surface.jpg")
+
+const venusGeometry = new THREE.SphereGeometry(0.95, 64, 64);
+const venusMaterial = new THREE.MeshStandardMaterial({ map: venusTexture }); // texture here -- see it replaces the color
+const venus = new THREE.Mesh(venusGeometry, venusMaterial);
+venus.position.x = 2.5;
+scene.add(venus);
+
 // Animation
 function animate() {
     requestAnimationFrame(animate);
     mercury.rotation.y += 0.003;
+    venus.rotation.y += 0.002;
     controls.update();
     renderer.render(scene, camera);
 }

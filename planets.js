@@ -54,6 +54,18 @@ const venus = new THREE.Mesh(venusGeometry, venusMaterial);
 venus.position.x = 2.5;
 scene.add(venus);
 
+//atmosphere of venus, basically another circle overlapping on the planet venus
+const atmosphereGeometry = new THREE.SphereGeometry(1.05, 64, 64); // slightly larger than venus
+const atmosphereMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffcc99, // soft orange-ish color
+  transparent: true,
+  opacity: 0.2,
+  side: THREE.BackSide // important: render inside of the sphere
+});
+const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+atmosphere.position.copy(venus.position); // match Venus position
+scene.add(atmosphere);
+
 // Animation
 function animate() {
     requestAnimationFrame(animate);

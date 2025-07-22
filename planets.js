@@ -18,7 +18,6 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -37,7 +36,7 @@ scene.add(lightHelper);
 
 // Mercury Texture
 const textureLoader = new THREE.TextureLoader();
-const mercuryTexture = textureLoader.load('./planets/2k_mercury.jpg'); // added texture, this is basically "color" of the mesh material
+const mercuryTexture = textureLoader.load("./planets/2k_mercury.jpg"); // added texture, this is basically "color" of the mesh material
 
 // Sphere
 const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -46,7 +45,7 @@ const mercury = new THREE.Mesh(geometry, material);
 scene.add(mercury);
 
 // venus
-const venusTexture = textureLoader.load("./planets/2k_venus_surface.jpg")
+const venusTexture = textureLoader.load("./planets/2k_venus_surface.jpg");
 
 const venusGeometry = new THREE.SphereGeometry(0.95, 64, 64);
 const venusMaterial = new THREE.MeshStandardMaterial({ map: venusTexture }); // texture here -- see it replaces the color
@@ -55,24 +54,54 @@ venus.position.x = 2.5;
 scene.add(venus);
 
 //atmosphere of venus, basically another circle overlapping on the planet venus
-const atmosphereGeometry = new THREE.SphereGeometry(1.05, 64, 64); // slightly larger than venus
-const atmosphereMaterial = new THREE.MeshBasicMaterial({
-  color: 0xffcc99, // soft orange-ish color
+const glowMaterial = new THREE.ShaderMaterial({
+  // this one replaces the mesh standard material
+  uniforms: {
+    c: { type: "f", value: 0.5 },
+    p: { type: "f", value: 4.0 },
+    glowColor: { type: "c", value: new THREE.Color(0xffc288) }, // warm glow
+    viewVector: { type: "v3", value: camera.position },
+  },
+  // calculates shader(complex math)
+  vertexShader: `
+    uniform vec3 viewVector;
+    uniform float c;
+    uniform float p;
+    varying float intensity;
+    void main() {
+      vec3 vNormal = normalize(normalMatrix * normal);
+      vec3 vNormView = normalize(normalMatrix * viewVector - modelViewMatrix * vec4(position, 1.0)).xyz;
+      intensity = pow(c - dot(vNormal, vNormView), p);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform vec3 glowColor;
+    varying float intensity;
+    void main() {
+      gl_FragColor = vec4(glowColor * intensity, intensity);
+    }
+  `,
+  side: THREE.BackSide,
+  blending: THREE.AdditiveBlending,
   transparent: true,
-  opacity: 0.2,
-  side: THREE.BackSide // important: render inside of the sphere
 });
-const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-atmosphere.position.copy(venus.position); // match Venus position
-scene.add(atmosphere);
+const glowGeometry = new THREE.SphereGeometry(1.15, 64, 64); // larger sphere
+const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+glowMesh.position.copy(venus.position);
+scene.add(glowMesh);
 
 // Animation
 function animate() {
-    requestAnimationFrame(animate);
-    mercury.rotation.y += 0.003;
-    venus.rotation.y += 0.002;
-    controls.update();
-    renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+  mercury.rotation.y += 0.003;
+  venus.rotation.y += 0.002;
+  glowMaterial.uniforms.viewVector.value = new THREE.Vector3().subVectors(
+    camera.position,
+    glowMesh.position
+  );
+  controls.update();
+  renderer.render(scene, camera);
 }
 
 animate();

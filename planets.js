@@ -1,6 +1,10 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
+import fragmentShader from "./shaders/fragment.glsl.js"
+import vertexShader from "./shaders/vertex.glsl.js"
+
+
 // Scene
 const scene = new THREE.Scene();
 
@@ -55,30 +59,9 @@ scene.add(venus);
 
 //atmosphere of venus, basically another circle overlapping on the planet venus
 const glowMaterial = new THREE.ShaderMaterial({
-  // this one replaces the mesh standard material
-  uniforms: {
-    c: { type: "f", value: 0.5 },
-    p: { type: "f", value: 4.0 },
-    glowColor: { type: "c", value: new THREE.Color(0xffc288) }, // warm glow
-    viewVector: { type: "v3", value: camera.position },
-  },
-  // calculates shader(complex math)
-  vertexShader: `
-    void main() {
-      vec3 vNormal = normalize(normalMatrix * normal);
-      vec3 vNormView = normalize(normalMatrix * viewVector - modelViewMatrix * vec4(position, 1.0)).xyz;
-      intensity = pow(c - dot(vNormal, vNormView), p);
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    void main() {
-      gl_FragColor = vec4(glowColor * intensity, intensity);
-    }
-  `,
-  side: THREE.BackSide,
-  blending: THREE.AdditiveBlending,
-  transparent: true,
+  vertexShader: vertexShader,
+  fragmentShader: fragmentShader,
+  transparent: true
 });
 const glowGeometry = new THREE.SphereGeometry(1.15, 64, 64); // larger sphere
 const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
@@ -90,10 +73,6 @@ function animate() {
   requestAnimationFrame(animate);
   mercury.rotation.y += 0.003;
   venus.rotation.y += 0.002;
-  glowMaterial.uniforms.viewVector.value = new THREE.Vector3().subVectors(
-    camera.position,
-    glowMesh.position
-  );
   controls.update();
   renderer.render(scene, camera);
 }

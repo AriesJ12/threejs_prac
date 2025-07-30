@@ -70,6 +70,8 @@ scene.add(glowMesh);
 
 const earthTexture = textureLoader.load("./planets/2k_earth_normal_map.tif")
 
+const eartGeometry = new THREE.SphereGeometry(1.5, 64, 64)
+const earthMaterial = new THREE.MeshStandardMaterial({map: earthTexture})
 
 
 // Animation

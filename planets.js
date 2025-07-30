@@ -68,7 +68,7 @@ const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
 glowMesh.position.copy(venus.position);
 scene.add(glowMesh);
 
-const earthTexture = textureLoader.load("./planets/2k_earth_normal_map.tif")
+const earthTexture = textureLoader.load("./planets/2k_earth_daymap.jpg")
 
 const eartGeometry = new THREE.SphereGeometry(1.3, 64, 64)
 const earthMaterial = new THREE.MeshStandardMaterial({map: earthTexture})

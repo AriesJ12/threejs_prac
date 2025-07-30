@@ -72,7 +72,9 @@ const earthTexture = textureLoader.load("./planets/2k_earth_normal_map.tif")
 
 const eartGeometry = new THREE.SphereGeometry(1.5, 64, 64)
 const earthMaterial = new THREE.MeshStandardMaterial({map: earthTexture})
-
+const earth = new THREE.Mesh(eartGeometry, earthMaterial)
+earth.position.x = 5
+scene.add(earth)
 
 // Animation
 function animate() {

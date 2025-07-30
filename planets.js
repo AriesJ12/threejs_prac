@@ -68,6 +68,10 @@ const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
 glowMesh.position.copy(venus.position);
 scene.add(glowMesh);
 
+const earthTexture = textureLoader.load("./planets/2k_earth_normal_map.tif")
+
+
+
 // Animation
 function animate() {
   requestAnimationFrame(animate);
